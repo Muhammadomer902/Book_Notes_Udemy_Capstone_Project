@@ -1,0 +1,91 @@
+<%- include('./partials/header.ejs') %>
+<div class="container">
+    <div class="container-1">
+        <h1>Muhammad Omer</h1>
+        <h2>Books I Have Read</h2>
+        <p>Tiny summary but detailed notes for each<br> Use the ISBN number to find it from your local library or anywhere else<br> This page will constantly update as I read more, so bookmark it if you want to check back in a few months</p>
+        <hr>
+    </div>
+    <div class="container-1">
+        <h1>Add Book</h1>
+        <form action="/addbook" method="POST">
+            <div class="form-group">
+                <label for="bookTitle">Book Title:</label>
+                <input type="text" class="form-control" id="bookTitle" name="bookTitle" required>
+            </div>
+            <div class="form-group">
+                <label for="bookAuthor">Book Author:</label>
+                <input type="text" class="form-control" id="bookAuthor" name="bookAuthor" required>
+            </div>
+            <div class="form-group">
+                <label for="bookReview">Book Review:</label>
+                <textarea class="form-control" id="bookReview" name="bookReview"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="bookRating">Book Rating (1-10):</label>
+                <input type="number" class="form-control" id="bookRating" name="bookRating" min="1" max="10">
+            </div>
+            <div class="form-group">
+                <label for="dateRead">Date Read:</label>
+                <input type="date" class="form-control" id="dateRead" name="dateRead">
+            </div>
+            <div class="form-group">
+                <label for="isbn">ISBN:</label>
+                <input type="number" class="form-control" id="isbn" name="isbn" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Book</button>
+        </form>
+        <hr>
+    </div>
+    <div class="container-1">
+        <h1>Edit Book Review and Rating</h1>
+    
+        <!-- Form to enter the book title -->
+        <form action="/search" method="POST">
+            <div class="mb-3">
+                <label for="bookTitle" class="form-label">Enter Book Title</label>
+                <input type="text" id="bookTitle" name="bookTitle" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search Book</button>
+        </form>
+    
+        <!-- Check if a book was found -->
+        <% if (locals.foundBook) { %>
+            <h2>Found Book: <%= foundBook.book_title %></h2>
+            <p><strong>Author:</strong> <%= foundBook.book_author %></p>
+            <p><strong>Current Rating:</strong> <%= foundBook.book_rating %>/10</p>
+            <p><strong>Current Review:</strong> <%= foundBook.book_review %></p>
+    
+            <!-- Form to enter new review and rating -->
+            <div id="editForm">
+                <form action="/edit/<%= foundBook.id %>" method="POST">
+                    <div class="mb-3">
+                        <label for="newReview" class="form-label">New Review</label>
+                        <textarea id="newReview" name="newReview" class="form-control" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newRating" class="form-label">New Rating</label>
+                        <input type="number" id="newRating" name="newRating" class="form-control" min="1" max="10" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Update Review and Rating</button>
+                </form>
+            </div>
+        <% } %>
+    </div>
+    <div class="container-1">
+        <h1>Books</h1>
+        <div class="books-list">
+            <% books.rows.forEach((book, index) => { %>
+                <div class="book-item">
+                    <img src="<%= covers[index] ? covers[index] : 'default-cover.jpg' %>" alt="<%= book.title %> Cover" class="book-cover">
+                    <h3><%= book.title %></h3>
+                    <p><strong>Author:</strong> <%= book.book_author %></p>
+                    <p><strong>Review:</strong> <%= book.book_review %></p>
+                    <p><strong>Rating:</strong> <%= book.book_rating %></p>
+                    <p><strong>Date Read:</strong> <%= book.date_read %></p>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</div>
+<%- include('./partials/footer.ejs') %>
