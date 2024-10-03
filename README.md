@@ -1,4 +1,4 @@
-# It is a Web Application made using Public API, NodeJS, Express and EJS, Languages used are HTML, CSS, SQL and JavaScript
+# It is a Web Application made using Public API, NodeJS, Express, PostgreSQL and EJS, Languages used are HTML, CSS, SQL and JavaScript
 
 You can keep a track of the Books you read and give your review about the Book to people
 
@@ -7,6 +7,8 @@ It is a Web Application Integrated with a Public API
 The Public API is:-https://openlibrary.org/dev/docs/api/covers
 
 In order to run the files Download all
+
+Open a Querry handler eg(MySQL, PostgreSQL) and run the Querrien in "query.sql"
 
 run "npm install" on terminal
 
